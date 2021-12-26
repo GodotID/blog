@@ -37,10 +37,16 @@ html
 html
 	head
 		title
-			text: {content-title}
+			text: Submit Your Article | GodotID Blog
 		link
 			rel: stylesheet
 			href: /css/general.css
+		link
+			rel: stylesheet
+			href: /css/submit.css
+		script
+			src: /js/expanding-textarea.js
+			defer:
 	body
 		header
 			img
@@ -48,7 +54,19 @@ html
 			h3
 				text: Blog
 		article
-			text: {content-here}
+			form
+				action: /submit
+				method: POST
+				input
+					header:
+					name: title
+					placeholder: Place Your Title Here
+				textarea
+					name: content
+					placeholder: Article goes here...
+				button
+					type: submit
+					text: Submit
 		footer
 			small
 				text: {
@@ -56,11 +74,56 @@ html
 					<a href="https://creativecommons.org/licenses/by/4.0/">CC-BY-4.0</a>
 				}
 
+#file js/expanding-textarea.js
+const els = document.getElementsByTagName("textarea")
+
+for (const e of els) {
+	e.style.height = this.scrollHeight + 'px';
+	e.addEventListener("input", etaOnInput, false);
+}
+
+function etaOnInput() {
+	this.style.height = 'auto';
+	this.style.height = this.scrollHeight + 'px';
+}
+
+#file css/submit.css
+form {
+	display: flex;
+	flex-direction: column;
+	gap: 1em;
+}
+
+input[header] {
+	font-family: Ubuntu, Arial, sans-serif;
+	font-size: 24px;
+	font-weight: bold;
+	border-bottom: 1px solid #5a5a5a80;
+	padding: 10px;
+}
+
+textarea {
+	font-family: inherit;
+	padding: 10px;
+}
+
+button {
+	padding: 10px;
+	border-radius: 5px;
+	font-family: inherit;
+	cursor: pointer;
+}
+
 #file css/general.css
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,400;0,700;1,400&display=swap');
 body {
 	margin: 0;
 	font-family: Ubuntu, Arial, sans-serif;
+
+	* {
+		border: 0;
+		outline: 0;
+	}
 }
 
 header {
@@ -84,6 +147,7 @@ article {
 	width: 80ch;
 	margin: auto;
 	color: #5a5a5a;
+	word-wrap: break-word;
 
 	> h1, > h2, > h3, > h4, > h5, > h6 {
 		color: #b45b5b;

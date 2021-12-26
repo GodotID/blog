@@ -2,6 +2,6 @@ build:
 	nice public.nice public
 
 serve:
-	node index.js
+	node --trace-warnings index.js
 
 test: build serve
