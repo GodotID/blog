@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npx nice public.nice public"
   },
   "keywords": [],
   "author": "",
@@ -12,6 +13,7 @@
   "dependencies": {
     "deta": "^1.0.1",
     "express": "^4.17.2",
-    "markdown-it": "^12.3.0"
+    "markdown-it": "^12.3.0",
+    "nicemarkup": "^0.2.3"
   }
 }
