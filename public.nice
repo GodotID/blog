@@ -24,7 +24,7 @@ html
 	body
 		header
 			img
-				src: /imgs/logo.png
+				src: https://godot.id/imgs/logo.png
 			h3
 				text: Blog
 		article
@@ -44,7 +44,7 @@ html
 	body
 		header
 			img
-				src: /imgs/logo.png
+				src: https://godot.id/imgs/logo.png
 			h3
 				text: Blog
 		article
