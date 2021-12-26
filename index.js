@@ -4,7 +4,7 @@ const md = require('markdown-it')();
 const { Deta } = require('deta');
 const express = require('express')
 
-const deta = Deta(process.env.DETATOKEN | "");
+const deta = Deta(process.env.DETATOKEN || "");
 const articles = deta.Base('articles');
 const app = express();
 
