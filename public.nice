@@ -1,0 +1,106 @@
+#file 404.html
+html
+	head
+		title
+			text: 404 Not Found | GodotID Blog
+		link
+			rel: stylesheet
+			href: /css/general.css
+	body
+		h1
+			text: 404 Not Found
+		p
+			text: We do not know how to deliver your requested file
+			@margin: 0
+
+#file article.html
+html
+	head
+		title
+			text: {content-title}
+		link
+			rel: stylesheet
+			href: /css/general.css
+	body
+		header
+			img
+				src: /imgs/logo.png
+			h3
+				text: Blog
+		article
+			text: {content-here}
+		footer
+			h3
+				text: Spread the love
+
+#file submit.html
+html
+	head
+		title
+			text: {content-title}
+		link
+			rel: stylesheet
+			href: /css/general.css
+	body
+		header
+			img
+				src: /imgs/logo.png
+			h3
+				text: Blog
+		article
+			text: {content-here}
+		footer
+			small
+				text: {
+					Your content will be licensed with
+					<a href="https://creativecommons.org/licenses/by/4.0/">CC-BY-4.0</a>
+				}
+
+#file css/general.css
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,400;0,700;1,400&display=swap');
+body {
+	margin: 0;
+	font-family: Ubuntu, Arial, sans-serif;
+}
+
+header {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: #fff;
+	color: #b25252;
+	box-shadow: 0 1px 10px #daafaf;
+	gap: 10px;
+
+	> img {
+		width: 48px;
+		height: 48px;
+		// filter: drop-shadow(0 0 1px red);
+	}
+}
+
+article {
+	padding-top: 3em;
+	width: 80ch;
+	margin: auto;
+	color: #5a5a5a;
+
+	> h1, > h2, > h3, > h4, > h5, > h6 {
+		color: #b45b5b;
+	}
+}
+
+footer {
+	width: 80ch;
+	margin: auto;
+	margin-top: 5em;
+}
+
+p, small {
+	color: #5a5a5a;
+}
+
+a {
+	color: inherit;
+	text-decoration: underline dotted 1px;
+}
