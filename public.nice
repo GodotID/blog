@@ -70,7 +70,7 @@ html
 		footer
 			small
 				text: {
-					Your content will be licensed with
+					Your content will rendered using CommonMark and will be licensed with
 					<a href="https://creativecommons.org/licenses/by/4.0/">CC-BY-4.0</a>
 				}
 
