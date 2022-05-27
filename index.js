@@ -2,6 +2,8 @@ const crypto = require('crypto');
 const fs = require('fs');
 const md = require('markdown-it')();
 
+const package = require('./package.json');
+
 const { Deta } = require('deta');
 const express = require('express')
 
@@ -11,13 +13,28 @@ const app = express();
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
-app.use(express.static('public'));
+app.use((req, res, next) => {
+	res.error = (code, msg) => {
+		res.json({
+			error: true,
+			msg: msg
+		});
+		res.status(code).end();
+	};
 
-app.get('/', (req, res) => res.send('Hello World!'));
+	res.success = (data, msg='') => {
+		res.json({
+			error: false,
+			data: data,
+			msg: msg
+		});
+		res.status(200).end();
+	};
 
-app.get('/submit', (req, res) => {
-	res.sendFile(`${__dirname}/public/submit.html`);
+	next();
 });
+
+app.get('/', (req, res) => res.send(`GodotID Blog API ${package.version}`));
 
 app.post('/submit', async (req, res) => {
 	let article = new Article(req.body.title, req.body.content, 'hanz')
@@ -26,26 +43,18 @@ app.post('/submit', async (req, res) => {
 	res.status(302).end();
 });
 
-app.get('/:article', async (req, res) => {
-	let template = '';
+app.get('/article/:article', async (req, res) => {
 	let article = await articles.get(req.params.article);
 	if (!article) {
-		return res.sendFile(`${__dirname}/public/404.html`);
+		return res.error(404, 'Article did not exists');
 	}
 	let { content, title } = article;
 
-	try {
-		template = fs.readFileSync(`${__dirname}/public/article.html`);
-	} catch (e) {
-		return res.status(500).end("Server error (1)");
-	}
-
 	content = md.render(`# ${title}\n${content}`);
-
-	template = template.toString().replace('{content-here}', content);
-	template = template.toString().replace('{content-title}', title);
-	res.set('Content-Type', 'text/html');
-	res.send(Buffer.from(template, 'utf8'));
+	return res.success({
+		...article,
+		rendered: content
+	});
 });
 
 function normalizeTitle(title) {

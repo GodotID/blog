@@ -1,2 +1,2 @@
-# blog
-GodotID Community Blog Website
+# blog-server
+GodotID Community Blog Website Server

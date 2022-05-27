@@ -1,11 +1,10 @@
 {
-  "name": "blog",
+  "name": "blog-server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npx nice public.nice public"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
@@ -13,7 +12,6 @@
   "dependencies": {
     "deta": "^1.0.1",
     "express": "^4.17.2",
-    "markdown-it": "^12.3.0",
-    "nicemarkup": "^0.2.3"
+    "markdown-it": "^12.3.0"
   }
 }

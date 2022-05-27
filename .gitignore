@@ -105,6 +105,4 @@ dist
 
 # Custom
 *~
-public/*
-!public/imgs/
 .deta/
