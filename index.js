@@ -112,15 +112,17 @@ class Author {
 
 class Article {
 	constructor(title, content, author, authorHash) {
+		const noncestr = String(Date.now());
+
 		let hash = crypto.createHash('sha256')
-			   .update(title + content + author)
+			   .update(title + content + author + noncestr)
 			   .digest('hex').substring(0, 8);
 		this.key = `${normalizeTitle(title)}-${hash}`;
 		this.title = title;
 		this.content = content;
 		this.author = author;
 		this.authorHash = authorHash;
-		this.creationDate = String(Date.now());
+		this.creationDate = noncestr;
 	}
 }
 
