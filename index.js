@@ -36,8 +36,25 @@ app.use((req, res, next) => {
 
 app.get('/', (req, res) => res.send(`GodotID Blog API ${package.version}`));
 
+app.post('/login', async (req, res) => {
+	let hash = crypto.createHash('sha256')
+		   .update(req.body.username + req.body.password)
+		   .digest('hex');
+	let user = await users.get(hash);
+	if (!user) {
+		return res.error(403, 'Username or password mismatch.');
+	}
+
+	return res.success(null);
+});
+
 app.post('/submit', async (req, res) => {
-	let article = new Article(req.body.title, req.body.content, 'hanz')
+	let user = await users.get(req.body.userhash);
+	if (!user) {
+		return res.error(403, 'Please login before submitting post.');
+	}
+
+	let article = new Article(req.body.title, req.body.content, user.name, user.key);
 	await articles.put(article);
 	res.location(`https://blog.godot.id/${article.key}`);
 	res.status(302).end();
@@ -52,7 +69,7 @@ app.get('/article/:article', async (req, res) => {
 
 	content = md.render(`# ${title}\n${content}`);
 	return res.success({
-		...article,
+		author: article.author,
 		rendered: content
 	});
 });
@@ -61,8 +78,20 @@ function normalizeTitle(title) {
 	return title.replace(/\s/g, '-').replace(/[^a-z0-9\-]/ig, '').toLowerCase();
 }
 
+class Author {
+	constructor(name, password, bio, profilePicture) {
+		this.name = name;
+		this.password = password;
+		this.hash = crypto.createHash('sha256')
+			    .update(name, password)
+			    .digest('hex');
+		this.bio = bio;
+		this.profilePicture = profilePicture;
+	}
+}
+
 class Article {
-	constructor(title, content, author) {
+	constructor(title, content, author, authorHash) {
 		let hash = crypto.createHash('sha256')
 			   .update(title + content + author)
 			   .digest('hex').substring(0, 8);
@@ -70,6 +99,8 @@ class Article {
 		this.title = title;
 		this.content = content;
 		this.author = author;
+		this.authorHash = authorHash;
+		this.creationDate = String(Date.now());
 	}
 }
 
