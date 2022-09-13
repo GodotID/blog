@@ -41,6 +41,7 @@ app.get('/', (req, res) => res.send(`GodotID Blog API ${package.version}`));
 
 app.post('/register', async (req, res) => {
 	// TODO: Verify user email
+	// WARN: TODO: Validate req.body user input
 	let rd = new Author(req.body.username, req.body.password, req.body.email);
 	let user = null;
 
@@ -58,6 +59,7 @@ app.post('/register', async (req, res) => {
 });
 
 app.post('/login', async (req, res) => {
+	// WARN: TODO: Validate req.body user input
 	let hash = crypto.createHash('sha256')
 		   .update(req.body.username + req.body.password)
 		   .digest('hex');
@@ -70,6 +72,7 @@ app.post('/login', async (req, res) => {
 });
 
 app.get('/user/:key', async (req, res) => {
+	// WARN: TODO: Validate req.body user input
 	let user = await users.get(req.params.key);
 
 	if (user === null) {
@@ -82,6 +85,7 @@ app.get('/user/:key', async (req, res) => {
 });
 
 app.post('/submit', async (req, res) => {
+	// WARN: TODO: Validate req.body user input
 	let user = await users.get(req.body.userhash);
 	if (!user) {
 		return res.error(403, 'Please login before submitting post.');
