@@ -105,6 +105,9 @@ app.get('/article/:article', async (req, res) => {
 	let { content, title } = article;
 
 	content = md.render(`# ${title}\n${content}`);
+
+	// Someday we will use `article`, i don't want to forgot this line at that time
+	article.authorHash = 'REDACTED';
 	return res.success({
 		author: article.author,
 		rendered: content
