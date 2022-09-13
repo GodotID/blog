@@ -39,6 +39,23 @@ app.use((req, res, next) => {
 // TODO: Refactor these endpoints into their own file, use a factory i guess.
 app.get('/', (req, res) => res.send(`GodotID Blog API ${package.version}`));
 
+app.post('/register', async (req, res) => {
+	let rd = new Author(req.body.username, req.body.password);
+	let user = null;
+
+	try {
+		user = await users.insert(rd, rd.hash);
+	} catch (e) {
+		// XXX: We should provide clear detail as to why this fails
+		return res.error(400, "User already exists");
+	}
+
+	return res.json({
+		name: rd.name
+		hash: rd.hash
+	});
+});
+
 app.post('/login', async (req, res) => {
 	let hash = crypto.createHash('sha256')
 		   .update(req.body.username + req.body.password)
