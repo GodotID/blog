@@ -141,7 +141,7 @@ class Article {
 	}
 }
 
-if (process.env.USER == "hanz") {
+if (!process.env.DETA_RUNTIME) {
 	app.listen(8080, async () => {
 		console.log("Ran at 8080");
 	});
