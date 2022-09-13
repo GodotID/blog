@@ -52,7 +52,7 @@ app.post('/register', async (req, res) => {
 		return res.error(400, "User already exists");
 	}
 
-	return res.json({
+	return res.success({
 		name: rd.name,
 		hash: rd.hash
 	});
@@ -83,7 +83,7 @@ app.get('/user/:key', async (req, res) => {
 
 	user.password = 'REDACTED';
 
-	return res.json(user);
+	return res.success(user);
 });
 
 app.post('/submit', async (req, res) => {
