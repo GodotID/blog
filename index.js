@@ -68,7 +68,9 @@ app.post('/login', async (req, res) => {
 		return res.error(403, 'Username or password mismatch.');
 	}
 
-	return res.success(null);
+	user.password = 'REDACTED';
+
+	return res.success(user);
 });
 
 app.get('/user/:key', async (req, res) => {
