@@ -68,6 +68,16 @@ app.post('/login', async (req, res) => {
 	return res.success(null);
 });
 
+app.get('/user/:key', async (req, res) => {
+	let user = await users.get(req.params.key);
+
+	if (user === null) {
+		return res.error(404, "User not found");
+	}
+
+	return res.json(user);
+});
+
 app.post('/submit', async (req, res) => {
 	let user = await users.get(req.body.userhash);
 	if (!user) {
