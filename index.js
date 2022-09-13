@@ -75,6 +75,8 @@ app.get('/user/:key', async (req, res) => {
 		return res.error(404, "User not found");
 	}
 
+	user.password = 'REDACTED';
+
 	return res.json(user);
 });
 
