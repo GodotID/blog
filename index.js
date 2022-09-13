@@ -103,7 +103,7 @@ class Author {
 		this.name = name;
 		this.password = password;
 		this.hash = crypto.createHash('sha256')
-			    .update(name, password)
+			    .update(name + password)
 			    .digest('hex');
 		this.bio = bio;
 		this.profilePicture = profilePicture;
