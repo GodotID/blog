@@ -9,10 +9,12 @@ const express = require('express')
 
 const deta = Deta(process.env.DETATOKEN || "");
 const articles = deta.Base('articles');
+const users = deta.Base('users');
 const app = express();
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
+// TODO: Add express centralized error handling
 app.use((req, res, next) => {
 	res.error = (code, msg) => {
 		res.json({
@@ -34,6 +36,7 @@ app.use((req, res, next) => {
 	next();
 });
 
+// TODO: Refactor these endpoints into their own file, use a factory i guess.
 app.get('/', (req, res) => res.send(`GodotID Blog API ${package.version}`));
 
 app.post('/login', async (req, res) => {
