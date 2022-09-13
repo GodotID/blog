@@ -40,7 +40,7 @@ app.use((req, res, next) => {
 app.get('/', (req, res) => res.send(`GodotID Blog API ${package.version}`));
 
 app.post('/register', async (req, res) => {
-	let rd = new Author(req.body.username, req.body.password);
+	let rd = new Author(req.body.username, req.body.password, req.body.email);
 	let user = null;
 
 	try {
@@ -111,9 +111,10 @@ function normalizeTitle(title) {
 }
 
 class Author {
-	constructor(name, password, bio, profilePicture) {
+	constructor(name, password, email, bio, profilePicture) {
 		this.name = name;
 		this.password = password;
+		this.email = email;
 		this.hash = crypto.createHash('sha256')
 			    .update(name + password)
 			    .digest('hex');
