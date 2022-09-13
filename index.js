@@ -53,7 +53,7 @@ app.post('/register', async (req, res) => {
 	}
 
 	return res.json({
-		name: rd.name
+		name: rd.name,
 		hash: rd.hash
 	});
 });
